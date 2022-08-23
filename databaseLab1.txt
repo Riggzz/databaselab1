@@ -1,0 +1,163 @@
+brainstorm
+
+recipe creating app
+
+
+recipes
+grocery list
+following
+follower
+username
+password
+email
+first name
+last name
+upvote
+downvote
+post
+prices
+measurements 
+instructions
+
+users
+- user_id  one to one
+- username  one to one
+- pasword  one to one		users are the people that utilize the social app and this holds all their important information
+- first_name  one to one
+- last_name  one to one
+- email  one to one
+
+recipe
+- recipe_id  one to one
+- grocery_item  one to one
+- measurements  one to one	recipe is a list of measuerments, ingredients, and instructions that a user can post and can make it private or public
+- instructions  one to one
+- private  one to one
+- public  one to one
+- comments one to many foreing key to recipe comments
+
+post
+- post_id   one to one
+- recipe	post is where the user can post said recipe and other users/followers can upvote or downvote it
+- upvote  one to one
+- downvote  one to one
+- comments one to many foreign key posts_comments
+
+grocery_list
+- grocery_list_id  one to one	   the grocery list is a list of the food items and ingredients witht the prices as well
+- food_item  one to one
+- prices  one to one
+
+follow
+- follow_id  one to one
+- following	one to many foreign key to users     follow will show the users followers and who they are following
+- followers many to one foreign key to users
+
+occasion
+- occasion_id  one to one
+- date  one to one
+- time  one to one		occasion is like a post but its similar to instagrams "story" feature where users can make a private or public occasion where other users can upvote or down vote
+- upvote  one to one	the owner of the occasion can also put a recipe on the occasion as well as the date and time.
+- downvote  one to one
+- recipe	one to many foreign key recipe
+- private  one to one 
+- public  one to one
+- comments one to many foreign key occasion_comments
+
+
+CREATE TABLE recipe_comments (
+recipe_comments_seperate VARCHAR(200) REFERENCES recipe(comments)
+)
+
+CREATE TABLE recipe (
+recipe_id SERIAL PRIMARY KEY,
+  recipe_ingredient VARCHAR(1000),
+  measurements int,
+  instructions VARCHAR(10000),
+  private BOOLEAN,
+  public BOOLEAN,
+  comments VARCHAR(200) 
+)
+
+CREATE TABLE ingredients (
+recipe_ingredient VARCHAR(1000) REFERENCES recipe(recipe_ingredient)
+)
+
+
+CREATE TABEL users (
+username VARCHAR(25),
+email VARCHAR(100),
+last_nameVARCHAR(100),
+user_id SERIAL PRIMARY KEY,
+password_hashVARCHAR(250),
+first_nameVARCHAR(30)
+)
+
+CREATE TABLE grocery_list (
+grocery_list_id SERIAL PRIMARY KEY,
+food_item VARCHAR(40),
+prices int
+)
+
+CREATE TABLE posts (
+post_id SERIAL PRIMARY KEY,
+  recipe int REFERENCES recipe(recipe_id),
+  upvote int,
+  downvote int,
+  comments VARCHAR(200)
+)
+
+CREATE TABLE posts_comments (
+posts_comments_seperate VARCHAR(200) REFERENCES posts(comments)
+)
+
+CREATE TABLE occasion (
+occasion_id SERIAL PRIMARY KEY,
+  date int,
+  time int,
+  upvote int,
+  downvote int,
+  recipe int REFERENCES recipe(recipe_id),
+  private boolean,
+  public boolean,
+  comments VARCHAR(200)
+)
+
+CREATE TABLE occasions_comments(
+occasions_comments_seperate VARCHAR(200) REFERENCES occasion(comments)
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
